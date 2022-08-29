@@ -33,22 +33,15 @@ class Solution {
     }
 
     func findLongestSubstringWithNoRepeatingCharacters(_ inputString: String) -> String {
-        guard inputString.count > 1 else {
-            return inputString
-        }
+        guard inputString.count > 1 else { return inputString }
         var outString: String = ""
-        let startAt: Int = 0
-        var endAt: Int = startAt + 1
-
-        let startPosn = inputString.index(inputString.startIndex, offsetBy: startAt)
-
+        var endAt: Int = 1
         while true {
-            let endPosn = inputString.index(inputString.startIndex, offsetBy: endAt)
-            let subString = inputString[startPosn...endPosn]
-            if checkStringForRepeatingCharacters(String(subString)) {
+            let subString = String(inputString[inputString.index(inputString.startIndex, offsetBy: 0)...inputString.index(inputString.startIndex, offsetBy: endAt)])
+            if checkStringForRepeatingCharacters(subString) {
                 break
             }
-            outString = String(subString)
+            outString = subString
             endAt += 1
             if endAt == inputString.count {
                 break
@@ -62,33 +55,29 @@ class Solution {
     }
 }
 
-let inputString: String = "abcabcbb"
+let ipString: String = "abcabcbb"
 //let inputString: String = "bbbbb"
 //let inputString: String = "pwwkew"
 //let inputString: String = "aaaaaaaaaaaaaaaaaaabkew"
 var finalString: String = ""
-var testString: String = inputString
-var outString: String = ""
+var testString: String = ipString
+var opString: String = ""
 
 var startAt: Int = 0
-let endAt: Int = inputString.count
 
 var solution: Solution = Solution()
 
 while true {
-    let outString = solution.findLongestSubstringWithNoRepeatingCharacters(testString)
+    let opString = solution.findLongestSubstringWithNoRepeatingCharacters(testString)
     // replace the current longest substring if the new one is longer
-    if outString.count > finalString.count {
-        finalString = outString
+    if opString.count > finalString.count {
+        finalString = opString
     }
     startAt += 1
     // if we have a shorter substring left than the current longest string, we're done
-    if ((endAt - startAt) < finalString.count) || (endAt == startAt) {
+    if ((ipString.count - startAt) < finalString.count) || (ipString.count == startAt) {
         break
     }
-    let startPosn = inputString.index(inputString.startIndex, offsetBy: startAt)
-    let endPosn = inputString.index(inputString.startIndex, offsetBy: endAt - 1)
-    testString = String(inputString[startPosn...endPosn])
+    testString = String(ipString[ipString.index(ipString.startIndex, offsetBy: startAt)...ipString.index(ipString.startIndex, offsetBy: ipString.count - 1)])
 }
-print("Longest substring found: \(finalString)")
-print("Characters in length: \(finalString.count)")
+print("Longest substring found: \(finalString) is \(finalString.count) in length")
